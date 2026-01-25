@@ -35,10 +35,8 @@ class ConflictResolutionService {
         switch strategy {
         case .lastWriteWins:
             // Use the one with the most recent updatedAt timestamp
-            if let localDate = local.updatedAt, let remoteDate = remote.updatedAt {
-                return localDate > remoteDate ? local : remote
-            }
-            return local
+            // updatedAt is not optional, so we can compare directly
+            return local.updatedAt > remote.updatedAt ? local : remote
             
         case .serverWins:
             return remote

@@ -35,15 +35,17 @@ class TaskService: TaskServiceProtocol {
     
     /// Fetch task by ID
     func fetchTask(id: UUID) async throws -> TaskItem? {
-        try dataManager.fetch(TaskItem.self, id: id) as? TaskItem
+        try dataManager.fetch(TaskItem.self, id: id)
     }
     
     /// Fetch tasks for a specific project
     func fetchTasks(for project: Project) async throws -> [TaskItem] {
-        let predicate = #Predicate<TaskItem> { task in
+        // SwiftData predicates have limitations with optional chaining
+        // Fetch all tasks and filter in Swift for project relationship
+        let allTasks = try await fetchTasks()
+        return allTasks.filter { task in
             task.project?.id == project.id
         }
-        return try await fetchTasks(predicate: predicate)
     }
     
     /// Fetch tasks for today
@@ -52,11 +54,11 @@ class TaskService: TaskServiceProtocol {
         let startOfDay = calendar.startOfDay(for: Date())
         let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
         
+        // Predicate must be a single expression - check that dueDate exists and is within range
         let predicate = #Predicate<TaskItem> { task in
-            if let dueDate = task.dueDate {
-                return dueDate >= startOfDay && dueDate < endOfDay
-            }
-            return false
+            task.dueDate != nil && 
+            task.dueDate! >= startOfDay && 
+            task.dueDate! < endOfDay
         }
         return try await fetchTasks(predicate: predicate)
     }
