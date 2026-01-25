@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import CloudKit
+import Combine
 
 /// Service for monitoring CloudKit sync status
 @MainActor
@@ -41,12 +42,4 @@ class CloudKitService: ObservableObject {
         let status = await checkAccountStatus()
         return status == .available
     }
-}
-
-/// Sync status enum (matches ServiceProtocols)
-enum SyncStatus {
-    case idle
-    case syncing
-    case success
-    case error(String)
 }

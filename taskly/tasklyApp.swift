@@ -13,6 +13,16 @@ struct tasklyApp: App {
     init() {
         // Register Sora fonts on app launch
         FontHelper.registerFonts()
+        
+        // Initialize CloudKit service
+        Task { @MainActor in
+            let isAvailable = await CloudKitService.shared.verifyCloudKitAvailable()
+            if isAvailable {
+                print("✅ CloudKit is available and ready")
+            } else {
+                print("⚠️ CloudKit is not available - check iCloud account status")
+            }
+        }
     }
     
     var sharedModelContainer: ModelContainer = {
@@ -46,6 +56,14 @@ struct tasklyApp: App {
                     // Set up SwiftData manager with context
                     if let context = sharedModelContainer.mainContext as? ModelContext {
                         SwiftDataManager.shared.setContext(context)
+                    }
+                    
+                    // Register services in dependency container
+                    DependencyContainer.shared.registerSingleton(TaskServiceProtocol.self) {
+                        TaskService()
+                    }
+                    DependencyContainer.shared.registerSingleton(ProjectServiceProtocol.self) {
+                        ProjectService()
                     }
                 }
         }

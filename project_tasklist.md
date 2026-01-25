@@ -42,19 +42,19 @@
 - [x] Enable CloudKit capability in Xcode
 - [x] Create CloudKit container
 - [x] Configure ModelContainer with CloudKit (automatic with SwiftData)
-- [ ] Set up CloudKit schema in CloudKit Dashboard (auto-generated from SwiftData models)
-- [ ] Verify CloudKit sync is working
+- [x] Set up CloudKit schema in CloudKit Dashboard (auto-generated from SwiftData models)
+- [x] Verify CloudKit sync is working
 - [x] Configure CloudKit container identifier
-- [ ] Test CloudKit container connection
+- [x] Test CloudKit container connection
 
 ### 2.3 Data Services
-- [ ] Create TaskRepository/Service class
-- [ ] Create ProjectRepository/Service class
-- [ ] Implement CRUD operations (Create, Read, Update, Delete)
-- [ ] Implement data fetching with @Query and predicates
-- [ ] Set up SwiftData ModelContext management (main + background)
-- [ ] Implement merge policies for conflict resolution
-- [ ] Create data migration strategy (SwiftData versioning)
+- [x] Create TaskRepository/Service class
+- [x] Create ProjectRepository/Service class
+- [x] Implement CRUD operations (Create, Read, Update, Delete)
+- [x] Implement data fetching with @Query and predicates
+- [x] Set up SwiftData ModelContext management (main + background)
+- [x] Implement merge policies for conflict resolution
+- [x] Create data migration strategy (SwiftData versioning)
 
 ## Phase 3: Core UI Components
 
